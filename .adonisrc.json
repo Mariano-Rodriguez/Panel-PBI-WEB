@@ -17,6 +17,7 @@
     "./start/routes",
     "./start/kernel"
   ],
+  
   "providers": [
     "./providers/AppProvider",
     "@adonisjs/core",
