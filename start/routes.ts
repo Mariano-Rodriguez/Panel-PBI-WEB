@@ -32,6 +32,8 @@ Route.group(() => {
   Route.post('asignarPermisos', 'UsuariosController.asignarPermisos')
   Route.get('getPermisosUsuario/:id', 'PermisosController.getPermisosUser')
   Route.post('usuariosBPermisos', 'UsuariosController.usuariosPermisos')
+  Route.resource('interaccionesA', 'InteraccionesController').apiOnly()
+  Route.get('interaccionesUsuarios', 'InteraccionesController.InteXUsuario')
 }).prefix("api/v1").middleware(['auth'])
 
 Route.group(() => {
@@ -42,6 +44,6 @@ Route.group(() => {
   Route.get('logoutB', 'AuthController.logout')
 }).prefix("auth/v1")
 
-Route.get('*', async ({ response }) => {
+/*Route.get('*', async ({ response }) => {
   return response.download('public/index.html')
-})
+})*/
