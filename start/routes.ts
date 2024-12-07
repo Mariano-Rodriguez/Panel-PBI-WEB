@@ -34,6 +34,10 @@ Route.group(() => {
   Route.post('usuariosBPermisos', 'UsuariosController.usuariosPermisos')
   Route.resource('interaccionesA', 'InteraccionesController').apiOnly()
   Route.get('interaccionesUsuarios', 'InteraccionesController.InteXUsuario')
+  Route.resource('panelesCategoriasPbi', 'PanelesCategoriasPbisController').apiOnly()
+  Route.resource('panelesPbi', 'PanelesPbisController').apiOnly()
+  Route.resource('panelesUsuarioPbi', 'PanelesUsuariosPbisController').apiOnly()
+  Route.post('obtenerPanel', 'PanelesUsuariosPbisController.obtenerPaneles')
 }).prefix("api/v1").middleware(['auth'])
 
 Route.group(() => {
@@ -44,6 +48,6 @@ Route.group(() => {
   Route.get('logoutB', 'AuthController.logout')
 }).prefix("auth/v1")
 
-/*Route.get('*', async ({ response }) => {
+Route.get('*', async ({ response }) => {
   return response.download('public/index.html')
-})*/
+})
