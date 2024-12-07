@@ -12,6 +12,12 @@ Route_1.default.group(() => {
     Route_1.default.post('asignarPermisos', 'UsuariosController.asignarPermisos');
     Route_1.default.get('getPermisosUsuario/:id', 'PermisosController.getPermisosUser');
     Route_1.default.post('usuariosBPermisos', 'UsuariosController.usuariosPermisos');
+    Route_1.default.resource('interaccionesA', 'InteraccionesController').apiOnly();
+    Route_1.default.get('interaccionesUsuarios', 'InteraccionesController.InteXUsuario');
+    Route_1.default.resource('panelesCategoriasPbi', 'PanelesCategoriasPbisController').apiOnly();
+    Route_1.default.resource('panelesPbi', 'PanelesPbisController').apiOnly();
+    Route_1.default.resource('panelesUsuarioPbi', 'PanelesUsuariosPbisController').apiOnly();
+    Route_1.default.post('obtenerPanel', 'PanelesUsuariosPbisController.obtenerPaneles');
 }).prefix("api/v1").middleware(['auth']);
 Route_1.default.group(() => {
     Route_1.default.post('login', 'AuthController.login');
