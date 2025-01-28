@@ -6,11 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Database_1 = __importDefault(global[Symbol.for('ioc.use')]("Adonis/Lucid/Database"));
 const Interaccione_1 = __importDefault(global[Symbol.for('ioc.use')]("App/Models/Interaccione"));
 const luxon_1 = require("luxon");
+const dayjs_1 = __importDefault(require("dayjs"));
 class InteraccionesController {
     async index({ response }) {
         try {
+            const fechaFormateada = (0, dayjs_1.default)().format('YYYY/MM/DD');
             const conteos = await Database_1.default
                 .from('interacciones')
+                .whereBetween('fecha', [fechaFormateada, fechaFormateada])
                 .join('vistas', 'vistas.id', 'interacciones.vista_id')
                 .select('vista_id', 'fecha', 'vistas.nombre')
                 .count('* as total')
@@ -29,10 +32,37 @@ class InteraccionesController {
             });
         }
     }
-    async InteXUsuario({ response }) {
+    async searchPorFechas({ response, request }) {
         try {
+            const requests = request.only(['start', 'end']);
             const conteos = await Database_1.default
                 .from('interacciones')
+                .whereBetween('fecha', [requests.start, requests.end])
+                .join('usuarios', 'usuarios.id', 'usuario_id')
+                .join('vistas', 'vistas.id', 'vista_id')
+                .select('vista_id', 'usuario_id', 'usuarios.email', 'vistas.nombre', 'fecha')
+                .count('* as total')
+                .groupBy('vista_id', 'usuario_id', 'fecha');
+            response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: conteos,
+                status: true
+            });
+        }
+        catch (e) {
+            return response.ok({
+                mensaje: "Ocurrio un error",
+                data: null,
+                status: false
+            });
+        }
+    }
+    async InteXUsuario({ response }) {
+        try {
+            const fechaFormateada = (0, dayjs_1.default)().format('YYYY/MM/DD');
+            const conteos = await Database_1.default
+                .from('interacciones')
+                .whereBetween('fecha', [fechaFormateada, fechaFormateada])
                 .join('usuarios', 'usuarios.id', 'usuario_id')
                 .join('vistas', 'vistas.id', 'vista_id')
                 .select('vista_id', 'usuario_id', 'usuarios.email', 'vistas.nombre', 'fecha')

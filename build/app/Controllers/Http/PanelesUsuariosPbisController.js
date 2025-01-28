@@ -22,6 +22,27 @@ class PanelesUsuariosPbisController {
             });
         }
     }
+    async getPanelesxUsuariosxCategoria({ response, request }) {
+        try {
+            const requests = request.only(['categoria_pbi_id']);
+            const data = await PanelesUsuariosPbi_1.default.query().preload('panel', (panelQuery) => {
+                panelQuery.where('paneles_categorias_pbis_id', requests.categoria_pbi_id);
+            }).preload('usuario');
+            const filteredData = data.filter((item) => item.panel !== null);
+            return response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: filteredData,
+                status: true
+            });
+        }
+        catch (e) {
+            return response.badRequest({
+                mensaje: "Consulta no ejecutada correctamente",
+                data: "",
+                status: false
+            });
+        }
+    }
     async create({}) { }
     async store({ response, request }) {
         try {
@@ -91,7 +112,25 @@ class PanelesUsuariosPbisController {
             });
         }
     }
-    async destroy({}) { }
+    async destroy({ params, response }) {
+        try {
+            const data = await PanelesUsuariosPbi_1.default.findByOrFail('id', params.id);
+            data.delete();
+            data.save();
+            return response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: "",
+                status: true
+            });
+        }
+        catch (e) {
+            return response.badRequest({
+                mensaje: "Consulta no ejecutada correctamente",
+                data: "",
+                status: false
+            });
+        }
+    }
 }
 exports.default = PanelesUsuariosPbisController;
 //# sourceMappingURL=PanelesUsuariosPbisController.js.map

@@ -18,6 +18,12 @@ Route_1.default.group(() => {
     Route_1.default.resource('panelesPbi', 'PanelesPbisController').apiOnly();
     Route_1.default.resource('panelesUsuarioPbi', 'PanelesUsuariosPbisController').apiOnly();
     Route_1.default.post('obtenerPanel', 'PanelesUsuariosPbisController.obtenerPaneles');
+    Route_1.default.post('getPanelesxCategoria', 'PanelesCategoriasPbisController.getPanelesxCategoria');
+    Route_1.default.post('getPanelesxUsuariosxCategoria', 'PanelesUsuariosPbisController.getPanelesxUsuariosxCategoria');
+    Route_1.default.resource('avisos', 'AvisosController').apiOnly();
+    Route_1.default.get('Allavisos', 'AvisosController.indexAll');
+    Route_1.default.get('cambiarStatusAviso/:id', 'AvisosController.changeStatus');
+    Route_1.default.post('searchPorFechas', 'InteraccionesController.searchPorFechas');
 }).prefix("api/v1").middleware(['auth']);
 Route_1.default.group(() => {
     Route_1.default.post('login', 'AuthController.login');

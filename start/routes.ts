@@ -38,6 +38,13 @@ Route.group(() => {
   Route.resource('panelesPbi', 'PanelesPbisController').apiOnly()
   Route.resource('panelesUsuarioPbi', 'PanelesUsuariosPbisController').apiOnly()
   Route.post('obtenerPanel', 'PanelesUsuariosPbisController.obtenerPaneles')
+  Route.post('getPanelesxCategoria', 'PanelesCategoriasPbisController.getPanelesxCategoria')
+  Route.post('getPanelesxUsuariosxCategoria', 'PanelesUsuariosPbisController.getPanelesxUsuariosxCategoria')
+
+  Route.resource('avisos', 'AvisosController').apiOnly()
+  Route.get('Allavisos', 'AvisosController.indexAll')
+  Route.get('cambiarStatusAviso/:id', 'AvisosController.changeStatus')
+  Route.post('searchPorFechas', 'InteraccionesController.searchPorFechas')
 }).prefix("api/v1").middleware(['auth'])
 
 Route.group(() => {

@@ -21,6 +21,30 @@ export default class PanelesUsuariosPbisController {
     }
   }
 
+  public async getPanelesxUsuariosxCategoria({ response, request }: HttpContextContract){
+    try{
+      const requests = request.only(['categoria_pbi_id'])
+      const data = await PanelesUsuariosPbi.query().preload('panel', (panelQuery) => {
+        panelQuery.where('paneles_categorias_pbis_id', requests.categoria_pbi_id)
+      }).preload('usuario')
+
+      // Filtrar registros donde panel no sea null
+      const filteredData = data.filter((item) => item.panel !== null)
+      
+      return response.ok({
+        mensaje: "Consulta ejecutada correctamente",
+        data: filteredData,
+        status: true
+      })
+    } catch (e) {
+      return response.badRequest({
+        mensaje: "Consulta no ejecutada correctamente",
+        data: "",
+        status: false
+      })
+    }
+  }
+
   public async create({}: HttpContextContract) {}
 
   public async store({ response, request }: HttpContextContract) {
@@ -107,5 +131,24 @@ export default class PanelesUsuariosPbisController {
     }
   }
 
-  public async destroy({}: HttpContextContract) {}
+  public async destroy({ params, response }: HttpContextContract) {
+    try {
+      const data = await PanelesUsuariosPbi.findByOrFail('id', params.id)
+      data.delete()
+      data.save()
+
+      return response.ok({
+        mensaje: "Consulta ejecutada correctamente",
+        data: "",
+        status: true
+      })
+    }
+    catch (e) {
+      return response.badRequest({
+        mensaje: "Consulta no ejecutada correctamente",
+        data: "",
+        status: false
+      })
+    }
+  }
 }
