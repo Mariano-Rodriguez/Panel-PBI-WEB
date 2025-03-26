@@ -12,6 +12,30 @@ export default class extends BaseSeeder {
       },
       {
         email: "sistemas@nartexlabs.com"
+      },
+      {
+        email: "rodolfo.mondragon@nartexlabs.com"
+      },
+      {
+        email: "humberto.hernandez@nartexlabs.com"
+      },
+      {
+        email: "daniela.muzza@nartexlabs.com"
+      },
+      {
+        email: "lilian.coronel@nartexlabs.com"
+      },
+      {
+        email: "edwin.palacios@nartexlabs.com"
+      },
+      {
+        email: "hsalas@nartexlabs.com"
+      },
+      {
+        email: "tania.hernandez@nartexlabs.com"
+      },
+      {
+        email: "victoria.gonzalez@nartexlabs.com"
       }
     ])
   }
