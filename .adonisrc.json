@@ -1,5 +1,5 @@
 {
-  "typescript": true,
+  "typescript": false,
   "commands": [
     "./commands",
     "@adonisjs/core/build/commands/index.js",
@@ -17,7 +17,6 @@
     "./start/routes",
     "./start/kernel"
   ],
-  
   "providers": [
     "./providers/AppProvider",
     "@adonisjs/core",
@@ -25,7 +24,8 @@
     "@adonisjs/view",
     "@adonisjs/shield",
     "@adonisjs/lucid",
-    "@adonisjs/auth"
+    "@adonisjs/auth",
+    "./providers/FirebaseProvider"
   ],
   "metaFiles": [
     {
@@ -53,5 +53,6 @@
   },
   "testProviders": [
     "@japa/preset-adonis/TestsProvider"
-  ]
+  ],
+  "lastCompiledAt": "2026-02-17T21:18:06.517Z"
 }

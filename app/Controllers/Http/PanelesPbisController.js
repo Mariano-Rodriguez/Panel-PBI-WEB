@@ -1,0 +1,139 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const PanelesPbi_1 = __importDefault(global[Symbol.for('ioc.use')]("App/Models/PanelesPbi"));
+class PanelesPbisController {
+    async index({ response }) {
+        try {
+            const pcb = await PanelesPbi_1.default.all();
+            return response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: pcb,
+                status: true
+            });
+        }
+        catch (e) {
+            return response.badRequest({
+                mensaje: "Consulta no ejecutada correctamente",
+                data: "",
+                status: false
+            });
+        }
+    }
+    async solo_activos({ response }) {
+        try {
+            const pcb = await PanelesPbi_1.default.query().where('status', true);
+            return response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: pcb,
+                status: true
+            });
+        }
+        catch (e) {
+            return response.badRequest({
+                mensaje: "Consulta no ejecutada correctamente",
+                data: "",
+                status: false
+            });
+        }
+    }
+    async solo_activos_categorias({ response, request }) {
+        try {
+            const categoria_id = request.only(['categoria_pbi_id']);
+            const pcb = await PanelesPbi_1.default.query().where('status', true).where('categoria_pbi_id', categoria_id.categoria_pbi_id);
+            return response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: pcb,
+                status: true
+            });
+        }
+        catch (e) {
+            return response.badRequest({
+                mensaje: "Consulta no ejecutada correctamente",
+                data: "",
+                status: false
+            });
+        }
+    }
+    async store({ request, response }) {
+        try {
+            const data = request.only(['nombre', 'descripcion', 'url_panel', 'categoria_pbi_id']);
+            await PanelesPbi_1.default.create(data);
+            return response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: "",
+                status: true
+            });
+        }
+        catch (e) {
+            return response.badRequest({
+                mensaje: "Consulta no ejecutada correctamente",
+                data: "",
+                status: false
+            });
+        }
+    }
+    async show({ response, params }) {
+        try {
+            const data = await PanelesPbi_1.default.findByOrFail('id', params.id);
+            return response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: data,
+                status: true
+            });
+        }
+        catch (e) {
+            return response.badRequest({
+                mensaje: "Consulta no ejecutada correctamente",
+                data: "",
+                status: false
+            });
+        }
+    }
+    async update({ request, params, response }) {
+        try {
+            const dataR = request.only(['nombre', 'descripcion', 'url_panel', 'categoria_pbi_id']);
+            const data = await PanelesPbi_1.default.findByOrFail('id', params.id);
+            data.nombre = dataR.nombre;
+            data.descripcion = dataR.descripcion;
+            data.url_panel = dataR.url_panel;
+            data.categoria_pbi_id = dataR.categoria_pbi_id;
+            data.save();
+            return response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: data,
+                status: true
+            });
+        }
+        catch (e) {
+            return response.badRequest({
+                mensaje: "Consulta no ejecutada correctamente",
+                data: "",
+                status: false
+            });
+        }
+    }
+    async destroy({ params, response }) {
+        try {
+            const data = await PanelesPbi_1.default.findByOrFail('id', params.id);
+            data.status = !data.status;
+            data.save();
+            return response.ok({
+                mensaje: "Consulta ejecutada correctamente",
+                data: data,
+                status: true
+            });
+        }
+        catch (e) {
+            return response.badRequest({
+                mensaje: "Consulta no ejecutada correctamente",
+                data: "",
+                status: false
+            });
+        }
+    }
+}
+exports.default = PanelesPbisController;
+//# sourceMappingURL=PanelesPbisController.js.map
