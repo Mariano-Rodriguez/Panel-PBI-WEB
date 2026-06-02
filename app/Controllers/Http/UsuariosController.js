@@ -28,7 +28,7 @@ class UsuariosController {
             const data = await Usuario_1.default.query().where('id', auth.user.id);
             return response.ok({
                 response: "Se ejecuto correctamente la consulta",
-                data: data,
+                data: data[0],
                 status: true
             });
         }

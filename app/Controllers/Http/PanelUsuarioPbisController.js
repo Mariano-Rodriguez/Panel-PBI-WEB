@@ -66,6 +66,20 @@ class PanelUsuarioPbisController {
     async store({ request, response }) {
         try {
             const info = request.only(['paneles_pbis_id', 'usuario_id']);
+            const panel = await PanelesPbi_1.default.findByOrFail('id', info.paneles_pbis_id);
+            const existeCategoria = await PanelUsuarioPbi_1.default.query()
+                .where('usuario_id', info.usuario_id)
+                .whereHas('panel', (panelQuery) => {
+                panelQuery.where('categoria_pbi_id', panel.categoria_pbi_id);
+            })
+                .first();
+            if (existeCategoria) {
+                return response.ok({
+                    mensaje: "El usuario ya tiene asignado un panel de esta categoria",
+                    data: "",
+                    status: false
+                });
+            }
             await PanelUsuarioPbi_1.default.create(info);
             return response.ok({
                 mensaje: "Consulta ejecutada correctamente",
@@ -103,7 +117,7 @@ class PanelUsuarioPbisController {
     }
     async show({ response, params }) {
         try {
-            const data = await PanelUsuarioPbi_1.default.query().where('id', params.id);
+            const data = await PanelUsuarioPbi_1.default.query().where('id', params.id).preload('panel').preload('usuario').firstOrFail();
             return response.ok({
                 mensaje: "Consulta ejecutada correctamente",
                 data: data,
@@ -123,6 +137,21 @@ class PanelUsuarioPbisController {
         try {
             const info = request.only(['paneles_pbis_id', 'usuario_id']);
             const data = await PanelUsuarioPbi_1.default.findByOrFail('id', params.id);
+            const panel = await PanelesPbi_1.default.findByOrFail('id', info.paneles_pbis_id);
+            const existeCategoria = await PanelUsuarioPbi_1.default.query()
+                .where('usuario_id', info.usuario_id)
+                .where('id', '<>', params.id)
+                .whereHas('panel', (panelQuery) => {
+                panelQuery.where('categoria_pbi_id', panel.categoria_pbi_id);
+            })
+                .first();
+            if (existeCategoria) {
+                return response.ok({
+                    mensaje: "El usuario ya tiene asignado un panel de esta categoria",
+                    data: "",
+                    status: false
+                });
+            }
             data.paneles_pbis_id = info.paneles_pbis_id;
             data.usuario_id = info.usuario_id;
             data.save();

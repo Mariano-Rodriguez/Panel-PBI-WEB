@@ -10,6 +10,7 @@ Route_1.default.group(() => {
     Route_1.default.resource('vistas', 'VistasController').apiOnly();
     Route_1.default.resource('usuarios', 'UsuariosController').apiOnly();
     Route_1.default.resource('vistas_usuarios', 'VistaUsuariosController').apiOnly();
+    Route_1.default.resource('interacciones', 'InteraccionesController').apiOnly();
     Route_1.default.get('usuarios_activos', 'UsuariosController.solo_activos');
     Route_1.default.get('info_usuario', 'UsuariosController.info_usuario');
     Route_1.default.get('vistas_por_usuario_loggeado', 'UsuariosController.obtener_vistas_por_usuario_loggueado');

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const luxon_1 = require("luxon");
 const Orm_1 = global[Symbol.for('ioc.use')]("Adonis/Lucid/Orm");
 const Vista_1 = __importDefault(require("./Vista"));
+const Usuario_1 = __importDefault(require("./Usuario"));
 class Interaccione extends Orm_1.BaseModel {
 }
 __decorate([
@@ -42,8 +43,16 @@ __decorate([
     __metadata("design:type", luxon_1.DateTime)
 ], Interaccione.prototype, "updatedAt", void 0);
 __decorate([
-    (0, Orm_1.hasOne)(() => Vista_1.default),
+    (0, Orm_1.belongsTo)(() => Vista_1.default, {
+        foreignKey: 'vista_id'
+    }),
     __metadata("design:type", Object)
 ], Interaccione.prototype, "vista", void 0);
+__decorate([
+    (0, Orm_1.belongsTo)(() => Usuario_1.default, {
+        foreignKey: 'usuario_id'
+    }),
+    __metadata("design:type", Object)
+], Interaccione.prototype, "usuario", void 0);
 exports.default = Interaccione;
 //# sourceMappingURL=Interaccione.js.map
