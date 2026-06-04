@@ -35,6 +35,7 @@ class CategoriasController {
                 .orderBy('nivel', 'asc')
                 .preload('vistas', (vistasQuery) => {
                 vistasQuery
+                    .select('vistas.*')
                     .innerJoin('vistas_usuarios', 'vistas.id', 'vistas_usuarios.vistas_id')
                     .where('vistas_usuarios.usuarios_id', auth.user.id)
                     .orderBy('vistas.nivel', 'asc');
