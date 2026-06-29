@@ -27,6 +27,7 @@ Route_1.default.group(() => {
     Route_1.default.post('obtenerPanel', 'PanelUsuarioPbisController.obtenerPaneles');
     Route_1.default.post('getPanelesxCategoria', 'PanelUsuarioPbisController.getPanelesxCategoria');
     Route_1.default.post('getPanelesxUsuariosxCategoria', 'PanelUsuarioPbisController.getPanelesxUsuariosxCategoria');
+    Route_1.default.get('getUsername', 'AuthController.getUsername');
 }).prefix('api/v1').middleware(['auth:api']);
 Route_1.default.group(() => {
     Route_1.default.get('login', 'AuthController.login').middleware('firebaseAuth');

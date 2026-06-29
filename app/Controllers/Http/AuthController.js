@@ -32,6 +32,11 @@ class AuthController {
         const token = await auth.use('api').generate(user, { expiresIn: '120 mins' });
         return response.ok({ mensaje: 'Inicio de Sesión Correcto', data: { token: token.token }, status: true });
     }
+    async getUsername({ auth, response }) {
+        const user = await Usuario_1.default.findByOrFail('id', auth.user?.id);
+        const username = user.nombre;
+        return response.ok({ mensaje: 'Inicio de Sesión Correcto', data: { username: username }, status: true });
+    }
 }
 exports.default = AuthController;
 //# sourceMappingURL=AuthController.js.map
