@@ -28,6 +28,7 @@
     "@adonisjs/session": "^6.4.0",
     "@adonisjs/shield": "^7.1.1",
     "@adonisjs/view": "^6.2.0",
+    "axios": "^1.18.1",
     "firebase-admin": "^13.5.0",
     "luxon": "^3.7.1",
     "mysql2": "^3.14.2",
